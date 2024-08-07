@@ -1,3 +1,5 @@
+// This code defines a Mongoose schema and model for a 'Post' in a MongoDB database. 
+// The schema defines the structure and data types for the documents in a MongoDB collection.
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;

@@ -300,18 +300,18 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+}
   
-  .admin-posts {
+.admin-posts {
     padding: 0;
     margin: 0;
-  }
+}
   
-  .admin-post-controls form {
+.admin-post-controls form {
     display: inline-block;
-  }
+}
   
-  .admin-post-controls .btn  {
+.admin-post-controls .btn  {
     display: inline-block;
     background-color: var(--black);
     color: var(--gray-light);
@@ -320,11 +320,10 @@ img {
     font-size: .8rem;
     padding: 4px 8px;
     line-height: 2;
-  }
+}
   
-  .admin-posts li {
+.admin-posts li {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-  }
-  
+}
