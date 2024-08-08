@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-// GET - Home
+// GET - Access home page
 router.get('', async (req, res) => {
     try {
         const locals = {
@@ -16,6 +16,25 @@ router.get('', async (req, res) => {
         const nextPage = parseInt(page) + 1;
         const hasNextPage = nextPage <= Math.ceil(count / perPage);
         res.render('index', {locals, data, current: page, nextPage: hasNextPage ? nextPage : null, currentRoute: '/'});
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// GET- Access about page
+router.get('/about', (req, res) => {
+    res.render('about', {currentRoute: '/about'});
+});
+
+
+// GET - Access sign in page
+router.get('/admin', async (req, res) => {
+    try {
+        const locals = {
+            title: "Se connecter",
+            description: "Blog créé avec NodeJs, MongoDb et Express."
+        };
+        res.render('sign_in', {locals, currentRoute: '/sign_in'});
     } catch (error) {
         console.log(error);
     }
@@ -59,52 +78,5 @@ router.post('/search', async (req, res) => {
         console.log(error);
     }
 });
-
-// router.get('', async (req, res) => {
-//     const locals = {
-//         title: "Blog du Matt",
-//         description: "Blog créé avec NodeJs, MongoDb et Express."
-//     } 
-//     try {
-//         const data = await Post.find();
-//         res.render('index', { locals, data });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
-router.get('/about', (req, res) => {
-    res.render('about', {currentRoute: '/about'});
-});
-
-// function insertPostData(){
-//     Post.insertMany([
-//         {
-//             title: "Emile",
-//             body: "Je suis prêt !! Tu m'accompagnes ?" 
-//         },
-//         {
-//             title: "Jorge",
-//             body: "Faites-que ça vaille le coup." 
-//         },
-//         {
-//             title: "Carter",
-//             body: "Ici Carter, terminé." 
-//         },
-//         {
-//             title: "Kat",
-//             body: "Première fois ? Moi aussi." 
-//         },
-//         {
-//             title: "Jun",
-//             body: "Ce fut un honneur." 
-//         },
-//         {
-//             title: "Noble 6",
-//             body: "Négatif, je suis armé. Bonne chance capitaine." 
-//         }
-//     ])
-// }
-// insertPostData();
 
 module.exports = router;

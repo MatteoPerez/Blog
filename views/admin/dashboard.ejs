@@ -3,6 +3,7 @@
     <a href="/add-post" class="button">+ Add new</a>
 </div>
 
+<h3>Posts</h3>
 <ul class="admin-posts">
     <% data.forEach(post => { %>
         <li>
@@ -16,3 +17,14 @@
         </li>
     <% }) %>
 </ul>
+
+<h3>Register new member</h3>
+<form action="/register" method="post">
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter username" name="username">
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Enter password" name="password">
+    <input type="submit" value="Register" class="btn">
+</form>
+
+<a href="/delete-member"><h3>Delete member</h3></a>

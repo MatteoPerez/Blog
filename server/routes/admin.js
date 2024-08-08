@@ -23,19 +23,6 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
-// GET - Access login page
-router.get('/admin', async (req, res) => {
-    try {
-        const locals = {
-            title: "Admin",
-            description: "Blog créé avec NodeJs, MongoDb et Express."
-        };
-        res.render('admin/index', { locals, layout: adminLayout });
-    } catch (error) {
-        console.log(error);
-    }
-});
-
 // GET - Access dashboard
 router.get('/dashboard', authMiddleware, async (req, res) => {
     try {
@@ -44,7 +31,7 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
         const data = await Post.find();
-        res.render('admin/dashboard', {locals, data, layout: adminLayout});
+        res.render('admin/dashboard', {locals, data, layout: adminLayout, currentRoute: '/dashboard'});
     } catch (error) {
         console.log(error);
     }
@@ -57,7 +44,7 @@ router.get('/add-post', authMiddleware, async (req, res) => {
             title: "Add post",
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
-        res.render('admin/add-post', {locals, layout: adminLayout});
+        res.render('admin/add-post', {locals, layout: adminLayout, currentRoute: '/add-post'});
     } catch (error) {
         console.log(error);
     }
@@ -71,7 +58,7 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
         const data = await Post.findOne({_id: req.params.id});
-        res.render('admin/edit-post', {locals, data, layout: adminLayout});
+        res.render('admin/edit-post', {locals, data, layout: adminLayout, currentRoute: `/edit-post/${req.params.id}`});
     } catch (error) {
         console.log(error);
     }
@@ -114,7 +101,7 @@ router.post('/admin', async (req, res) => {
 // POST - Register a new account
 router.post('/register', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const {username, password} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         try {
             const user = await User.create({username, password:hashedPassword});

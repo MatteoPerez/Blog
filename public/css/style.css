@@ -63,13 +63,15 @@ img {
 
 /* Layout */
 .container {
-    max-width: 50%;
-    margin: 0 auto;
-    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .main {
-    padding: 20px 0;
+    margin: 0 15%;
+    padding: 2rem 1rem;
+    background: white;
 }
 
 /* Hero section */
@@ -85,17 +87,23 @@ img {
 .header {
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: auto;
     grid-template-areas:
     "logo button"
     "menu menu";
-    padding-top: 10px;
+    padding: 1rem;
+    background-color: white;
+    border-style: none none solid none;
+    border-width: thin;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 @media only screen and (min-width: 768px) {
     .header {
-        grid-template-columns: auto 1fr auto;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-template-areas: 
         "logo menu button";
     }
@@ -160,7 +168,7 @@ img {
     text-decoration: underline;
 }
 
-.header__nav ul a:active {
+.header__nav ul a.active {
     color: var(--gray);
 }
 
@@ -186,7 +194,7 @@ img {
 }
 
 .article__heading {
-    margin-top: 4rem;
+    margin-top: 2rem;
     font-weight: 400;
 }
 
@@ -262,8 +270,13 @@ img {
 
 /* Footer */
 .footer {
-    margin: 4rem;
+    padding: 1rem;
     text-align: center;
+    background-color: white;
+    border-style: solid none none none;
+    border-width: thin;
+
+    margin-top: auto;
 }
 
 /* Search bar */
