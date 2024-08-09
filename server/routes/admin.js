@@ -64,6 +64,19 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
     }
 });
 
+// GET - Access manage member page
+router.get('/manage-members', authMiddleware, async (req, res) => {
+    try {
+        const locals = {
+            title: "Manage member",
+            description: "Blog créé avec NodeJs, MongoDb et Express."
+        };
+        res.render('admin/manage-members', {locals, layout: adminLayout, currentRoute: '/manage-members'});
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 // PUT - Edit post
 router.put('/edit-post/:id', authMiddleware, async (req, res) => {
     try {

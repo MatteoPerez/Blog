@@ -267,7 +267,6 @@ img {
     color: var(--black);
 }
 
-
 /* Footer */
 .footer {
     padding: 1rem;
@@ -275,7 +274,6 @@ img {
     background-color: white;
     border-style: solid none none none;
     border-width: thin;
-
     margin-top: auto;
 }
 
@@ -288,6 +286,7 @@ img {
     position: absolute;
     left: 0;
     right: 0;
+    z-index: 1001;
 }
 
 .searchBar.open {
