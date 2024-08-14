@@ -1,4 +1,25 @@
 <a href="/dashboard">&larr;Back</a>
 <div class="admin-title">
-    <h2>Manage member</h2>
+    <h2>Gestion des membres</h2>
 </div>
+
+<h3>Enregistrer un nouveau membre</h3>
+<form action="/register" method="post">
+    <label for="username"><b>Nom d'utilisateur</b></label>
+    <input type="text" placeholder="Entrer votre nom d'utilisateur" name="username">
+    <label for="password"><b>Mot de passe</b></label>
+    <input type="password" placeholder="Entrer votre mot de passe" name="password">
+    <input type="submit" value="Register" class="btn">
+</form>
+
+<h3>Modifier mot de passe</h3>
+<form action="/register" method="post">
+    <label for="username"><b>Nom d'utilisateur</b></label>
+    <input type="text" placeholder="Entrer votre nom d'utilisateur" name="username">
+    <label for="password"><b>Mot de passe</b></label>
+    <input type="password" placeholder="Entrer votre ancien mot de passe" name="old-password">
+    <label for="username"><b>Nouveau mot de passe</b></label>
+    <input type="password" placeholder="Entrer votre nouveau mot de passe" name="new-password">
+    <input type="password" placeholder="Vérification du nouveau mot de passe" name="new-password-verif">
+    <input type="submit" value="Register" class="btn">
+</form>

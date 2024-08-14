@@ -17,7 +17,7 @@ body {
     font-family: 'Cairo', sans-serif;
     color: var(--black);
     font-size: var(--font-size-base);
-    background-color: rgb(255, 246, 233);
+    background-color: wheat;
     margin: 0;
 }
 
@@ -70,7 +70,7 @@ img {
 
 .main {
     margin: 0 15%;
-    padding: 2rem 1rem;
+    padding: 1rem 0.5rem;
     background: white;
 }
 
@@ -98,7 +98,7 @@ img {
     border-width: thin;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1;
 }
 
 @media only screen and (min-width: 768px) {
@@ -286,7 +286,7 @@ img {
     position: absolute;
     left: 0;
     right: 0;
-    z-index: 1001;
+    z-index: 2;
 }
 
 .searchBar.open {

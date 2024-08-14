@@ -1,0 +1,23 @@
+<div class="author">
+    <h1 class="author__heading">Bienvenue à toi jeune étudiant !</h1>
+    <p class="author__body">À la recherche de cours, fiches ou même conseils ? Alors sache que tu es au bon endroit.</p>
+</div>
+
+<img src="/img/forest_mountain.jpg" alt="logo" class="hero-image" width="640" height="427">
+
+<section class="articles">
+    <h2 class="articles__heading">Latest Posts</h2>
+    <ul class="article-ul">
+        <% data.forEach(post => { %>
+            <li>
+                <a href="/post/<%= post._id %>">
+                    <span><%= post.title %></span>
+                    <span class="article-list__date"><%= post.createdAt.toDateString() %></span>
+                </a>
+            </li>
+        <% }) %>
+    </ul>
+    <% if (nextPage !== null) { %>
+        <a href="/?page=<%= nextPage %>" class="pagination">&lt; View older posts</a>
+    <% } %>
+</section>

@@ -2,13 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
+const File = require('../models/File');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const adminLayout = '../views/layouts/admin';
 const jwtSecret = process.env.JWT_SECRET;
 
-// Check login
 const authMiddleware = (req, res, next) => {
     const token = req.cookies.token;
     if(!token){
@@ -31,7 +30,7 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
         const data = await Post.find();
-        res.render('admin/dashboard', {locals, data, layout: adminLayout, currentRoute: '/dashboard'});
+        res.render('admin/dashboard', {locals, data, currentRoute: '/dashboard'});
     } catch (error) {
         console.log(error);
     }
@@ -41,10 +40,10 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
 router.get('/add-post', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Add post",
+            title: "Ajout post",
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
-        res.render('admin/add-post', {locals, layout: adminLayout, currentRoute: '/add-post'});
+        res.render('admin/add-post', {locals, currentRoute: '/add-post'});
     } catch (error) {
         console.log(error);
     }
@@ -58,23 +57,43 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
         const data = await Post.findOne({_id: req.params.id});
-        res.render('admin/edit-post', {locals, data, layout: adminLayout, currentRoute: `/edit-post/${req.params.id}`});
+        res.render('admin/edit-post', {locals, data, currentRoute: `/edit-post/${req.params.id}`});
     } catch (error) {
         console.log(error);
     }
 });
 
-// GET - Access manage member page
+// GET - Access manage members page
 router.get('/manage-members', authMiddleware, async (req, res) => {
     try {
         const locals = {
             title: "Manage member",
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
-        res.render('admin/manage-members', {locals, layout: adminLayout, currentRoute: '/manage-members'});
+        res.render('admin/manage-members', {locals, currentRoute: '/manage-members'});
     } catch (error) {
         console.log(error);
     }
+});
+
+// GET - Access manage files page
+router.get('/manage-files', authMiddleware, async (req, res) => {
+    try {
+        const locals = {
+            title: "Manage files",
+            description: "Blog créé avec NodeJs, MongoDb et Express."
+        };
+        const data = await File.find();
+        res.render('admin/manage-files', {locals, data, currentRoute: '/manage-files'});
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// GET - Log out
+router.get('/logout', authMiddleware, async (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/');
 });
 
 // PUT - Edit post
@@ -104,6 +123,7 @@ router.post('/admin', async (req, res) => {
             return res.status(401).json({message: 'Information(s) non valide(s)'});
         }
         const token = jwt.sign({userId: user._id}, jwtSecret);
+        isAuthentified = true;
         res.cookie('token', token, {httpOnly: true});
         res.redirect('/dashboard');
     } catch (error) {
@@ -153,12 +173,6 @@ router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-});
-
-// GET - Log out
-router.get('/logout', authMiddleware, async (req, res) => {
-    res.clearCookie('token');
-    res.redirect('/');
 });
 
 module.exports = router;

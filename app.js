@@ -1,4 +1,4 @@
-// This code sets up and runs a web application using Express.js.
+// This code sets up and runs the web application using Express.js.
 
 // Load environment variables from a .env file
 require('dotenv').config();
@@ -14,7 +14,8 @@ const MongoStore = require('connect-mongo');
 const app = express();
 const PORT = 5000 || process.env.PORT;
 
-const {isActiveRoute} = require('./server/helpers/routeHelpers');
+const {isActiveRoute} = require('./server/helpers/routeHelper');
+const loginMiddleware = require('./server/helpers/loginMiddleware');
 
 // Connect to database
 const connectDB = require('./server/config/db');
@@ -34,6 +35,7 @@ app.use(session({
         mongoUrl: process.env.MONGODB_URI
     })
 }));
+app.use(loginMiddleware);
 
 // Set the folder for static files
 app.use(express.static('public'));

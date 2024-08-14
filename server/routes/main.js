@@ -15,7 +15,7 @@ router.get('', async (req, res) => {
         const count = await Post.countDocuments();
         const nextPage = parseInt(page) + 1;
         const hasNextPage = nextPage <= Math.ceil(count / perPage);
-        res.render('index', {locals, data, current: page, nextPage: hasNextPage ? nextPage : null, currentRoute: '/'});
+        res.render('home', {locals, data, current: page, nextPage: hasNextPage ? nextPage : null, currentRoute: '/'});
     } catch (error) {
         console.log(error);
     }
@@ -32,9 +32,22 @@ router.get('/admin', async (req, res) => {
     try {
         const locals = {
             title: "Se connecter",
-            description: "Blog créé avec NodeJs, MongoDb et Express."
+            description: "Site créé avec NodeJs, MongoDb et Express."
         };
         res.render('sign_in', {locals, currentRoute: '/sign_in'});
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// GET - Access manage member page
+router.get('/files', async (req, res) => {
+    try {
+        const locals = {
+            title: "Fichiers",
+            description: "Site créé avec NodeJs, MongoDb et Express."
+        };
+        res.render('files', {locals, currentRoute: '/files'});
     } catch (error) {
         console.log(error);
     }
@@ -49,7 +62,7 @@ router.get('/post/:id', async (req, res) => {
             title: data.title,
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
-        res.render('post', { locals, data, currentRoute: `/post/${slug}` });
+        res.render('post', {locals, data, currentRoute: `/post/${slug}`});
     } catch (error) {
         console.log(error);
     }
@@ -70,10 +83,7 @@ router.post('/search', async (req, res) => {
                 {body: {$regex: new RegExp(searchNoSpecialCharacter, 'i')}}
             ]
         });
-        res.render("search", {
-            data,
-            locals
-        });
+        res.render("search", {data, locals, currentRoute: '/'});
     } catch (error) {
         console.log(error);
     }
