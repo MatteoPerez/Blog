@@ -3,6 +3,13 @@
     <h2>Gestion des membres</h2>
 </div>
 
+<h3>Liste des membres</h3>
+<ul>
+    <% data.forEach(user => { %>
+        <li><%= user.username %></li>
+    <% }) %>
+</ul>
+
 <h3>Enregistrer un nouveau membre</h3>
 <form action="/register" method="post">
     <label for="username"><b>Nom d'utilisateur</b></label>

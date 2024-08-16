@@ -23,7 +23,8 @@ router.get('', async (req, res) => {
 
 // GET- Access about page
 router.get('/about', (req, res) => {
-    res.render('about', {currentRoute: '/about'});
+    const locals = {title: "À propos"};
+    res.render('about', {locals, currentRoute: '/about'});
 });
 
 
@@ -31,8 +32,7 @@ router.get('/about', (req, res) => {
 router.get('/admin', async (req, res) => {
     try {
         const locals = {
-            title: "Se connecter",
-            description: "Site créé avec NodeJs, MongoDb et Express."
+            title: "Se connecter"
         };
         res.render('sign_in', {locals, currentRoute: '/sign_in'});
     } catch (error) {
@@ -44,8 +44,7 @@ router.get('/admin', async (req, res) => {
 router.get('/files', async (req, res) => {
     try {
         const locals = {
-            title: "Fichiers",
-            description: "Site créé avec NodeJs, MongoDb et Express."
+            title: "Fichiers"
         };
         res.render('files', {locals, currentRoute: '/files'});
     } catch (error) {
@@ -59,8 +58,7 @@ router.get('/post/:id', async (req, res) => {
         let slug = req.params.id;
         const data = await Post.findById({_id: slug});
         const locals = {
-            title: data.title,
-            description: "Blog créé avec NodeJs, MongoDb et Express."
+            title: data.title
         };
         res.render('post', {locals, data, currentRoute: `/post/${slug}`});
     } catch (error) {
@@ -72,8 +70,7 @@ router.get('/post/:id', async (req, res) => {
 router.post('/search', async (req, res) => {
     try {
         const locals = {
-            title: "Search",
-            description: "Blog créé avec NodeJs, MongoDb et Express."
+            title: "Résultats"
         }
         let searchTerm = req.body.searchTerm;
         const searchNoSpecialCharacter = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");

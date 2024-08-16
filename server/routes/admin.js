@@ -26,8 +26,7 @@ const authMiddleware = (req, res, next) => {
 router.get('/dashboard', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Dashboard",
-            description: "Blog créé avec NodeJs, MongoDb et Express."
+            title: "Dashboard"
         };
         const data = await Post.find();
         res.render('admin/dashboard', {locals, data, currentRoute: '/dashboard'});
@@ -40,8 +39,7 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
 router.get('/add-post', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Ajout post",
-            description: "Blog créé avec NodeJs, MongoDb et Express."
+            title: "Ajout post"
         };
         res.render('admin/add-post', {locals, currentRoute: '/add-post'});
     } catch (error) {
@@ -53,8 +51,7 @@ router.get('/add-post', authMiddleware, async (req, res) => {
 router.get('/edit-post/:id', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Edit post",
-            description: "Blog créé avec NodeJs, MongoDb et Express."
+            title: "Edit post"
         };
         const data = await Post.findOne({_id: req.params.id});
         res.render('admin/edit-post', {locals, data, currentRoute: `/edit-post/${req.params.id}`});
@@ -67,10 +64,10 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
 router.get('/manage-members', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Manage member",
-            description: "Blog créé avec NodeJs, MongoDb et Express."
+            title: "Manage member"
         };
-        res.render('admin/manage-members', {locals, currentRoute: '/manage-members'});
+        const data = await User.find();
+        res.render('admin/manage-members', {locals, data, currentRoute: '/manage-members'});
     } catch (error) {
         console.log(error);
     }
@@ -80,8 +77,7 @@ router.get('/manage-members', authMiddleware, async (req, res) => {
 router.get('/manage-files', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Manage files",
-            description: "Blog créé avec NodeJs, MongoDb et Express."
+            title: "Manage files"
         };
         const data = await File.find();
         res.render('admin/manage-files', {locals, data, currentRoute: '/manage-files'});
