@@ -10,17 +10,13 @@ const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const multer = require('multer');
+const { connectDB } = require('./server/config/db');
 
 const app = express();
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
-const {isActiveRoute} = require('./server/helpers/routeHelper');
+const { isActiveRoute } = require('./server/helpers/routeHelper');
 const loginMiddleware = require('./server/helpers/loginMiddleware');
-
-// Connect to database
-const connectDB = require('./server/config/db');
-connectDB();
 
 app.locals.isActiveRoute = isActiveRoute;
 
@@ -49,6 +45,9 @@ app.set('view engine', 'ejs');
 // Define the main route for the application
 app.use('/', require('./server/routes/main'));
 app.use('/', require('./server/routes/admin'));
+app.use('/files', require('./server/routes/files'));
+
+connectDB();
 
 // Start the server and listen on the specified port
 app.listen(PORT, () => {

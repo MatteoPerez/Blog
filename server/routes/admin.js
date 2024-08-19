@@ -4,36 +4,9 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../helpers/authMiddleware');
 
 const jwtSecret = process.env.JWT_SECRET;
-
-const { MongoClient, GridFSBucket } = require('mongodb');
-async function getFiles() {
-    const client = new MongoClient(process.env.MONGODB_URI, { useUnifiedTopology: true });
-    await client.connect();
-    const db = client.db(process.env.DB_NAME);
-    const bucket = new GridFSBucket(db);
-  
-    const filesCollection = db.collection('fs.files');
-    const files = await filesCollection.find({}).toArray();
-  
-    await client.close();
-    return files;
-};
-
-const authMiddleware = (req, res, next) => {
-    const token = req.cookies.token;
-    if(!token){
-        return res.status(401).json({message: 'Non authorisé'});
-    }
-    try {
-        const decoded = jwt.verify(token, jwtSecret);
-        req.userId = decoded.userId;
-        next();
-    } catch (error) {
-        res.status(401).json({message: 'Non authorisé'});
-    }
-};
 
 // GET - Access dashboard
 router.get('/dashboard', authMiddleware, async (req, res) => {
@@ -81,19 +54,6 @@ router.get('/manage-members', authMiddleware, async (req, res) => {
         };
         const data = await User.find();
         res.render('admin/manage-members', {locals, data, currentRoute: '/manage-members'});
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-// GET - Access manage files page
-router.get('/manage-files', authMiddleware, async (req, res) => {
-    try {
-        const locals = {
-            title: "Gestion des fichiers"
-        };
-        const files = await getFiles();
-        res.render('admin/manage-files', {locals, files, currentRoute: '/manage-files'});
     } catch (error) {
         console.log(error);
     }
