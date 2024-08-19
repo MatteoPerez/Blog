@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
+let db, bucket;
+
 // GET - Access home page
 router.get('', async (req, res) => {
     try {
         const locals = {
-            title: "Blog du Matt",
+            title: "Accueil",
             description: "Blog créé avec NodeJs, MongoDb et Express."
         };
         let perPage = 5;
@@ -69,9 +71,7 @@ router.get('/post/:id', async (req, res) => {
 // POST - Post searchterm
 router.post('/search', async (req, res) => {
     try {
-        const locals = {
-            title: "Résultats"
-        }
+        const locals = {title: "Résultats"}
         let searchTerm = req.body.searchTerm;
         const searchNoSpecialCharacter = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
         const data = await Post.find({

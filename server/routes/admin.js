@@ -2,11 +2,24 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
-const File = require('../models/File');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const jwtSecret = process.env.JWT_SECRET;
+
+const { MongoClient, GridFSBucket } = require('mongodb');
+async function getFiles() {
+    const client = new MongoClient(process.env.MONGODB_URI, { useUnifiedTopology: true });
+    await client.connect();
+    const db = client.db(process.env.DB_NAME);
+    const bucket = new GridFSBucket(db);
+  
+    const filesCollection = db.collection('fs.files');
+    const files = await filesCollection.find({}).toArray();
+  
+    await client.close();
+    return files;
+};
 
 const authMiddleware = (req, res, next) => {
     const token = req.cookies.token;
@@ -64,7 +77,7 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
 router.get('/manage-members', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Manage member"
+            title: "Gestion des membres"
         };
         const data = await User.find();
         res.render('admin/manage-members', {locals, data, currentRoute: '/manage-members'});
@@ -77,10 +90,10 @@ router.get('/manage-members', authMiddleware, async (req, res) => {
 router.get('/manage-files', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Manage files"
+            title: "Gestion des fichiers"
         };
-        const data = await File.find();
-        res.render('admin/manage-files', {locals, data, currentRoute: '/manage-files'});
+        const files = await getFiles();
+        res.render('admin/manage-files', {locals, files, currentRoute: '/manage-files'});
     } catch (error) {
         console.log(error);
     }

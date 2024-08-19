@@ -1,6 +1,18 @@
-<h3>Gestion des fichiers</h3>
-<ul>
-    <% data.forEach(file => { %>
-        <li><%= file.filename %></li>
-    <% }) %>
-</ul>
+<a href="/dashboard">&larr;Back</a>
+<div class="admin-title">
+    <h2>Gestion des fichiers</h2>
+</div>
+<h3>Liste des fichiers</h3>
+<% if (files) { %>
+    <ul>
+        <% files.forEach(file => { %>
+            <li><a href="/download/<%= file.filename %>"><%= file.filename %></a> - <%= file.length %> octets</li>
+        <% }) %>
+    </ul>
+<% } else { %>
+    <p>Aucun fichier trouvé.</p>
+<% } %>
+
+
+
+
