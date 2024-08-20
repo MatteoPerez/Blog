@@ -27,7 +27,7 @@ router.get('/add-post', authMiddleware, async (req, res) => {
         const locals = {
             title: "Ajout post"
         };
-        res.render('admin/add-post', {locals, currentRoute: '/add-post'});
+        res.render('admin/add-post', {locals, currentRoute: '/dashboard'});
     } catch (error) {
         console.log(error);
     }
@@ -40,7 +40,7 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
             title: "Edit post"
         };
         const data = await Post.findOne({_id: req.params.id});
-        res.render('admin/edit-post', {locals, data, currentRoute: `/edit-post/${req.params.id}`});
+        res.render('admin/edit-post', {locals, data, currentRoute: '/dashboard'});
     } catch (error) {
         console.log(error);
     }
@@ -53,7 +53,7 @@ router.get('/manage-members', authMiddleware, async (req, res) => {
             title: "Gestion des membres"
         };
         const data = await User.find();
-        res.render('admin/manage-members', {locals, data, currentRoute: '/manage-members'});
+        res.render('admin/manage-members', {locals, data, currentRoute: '/dashboard'});
     } catch (error) {
         console.log(error);
     }
@@ -107,12 +107,12 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         try {
             const user = await User.create({username, password:hashedPassword});
-            res.status(201).json({ message: 'User created', user });
+            res.status(201).json({ message: 'Nouvel utilisateur créé', user });
         } catch (error) {
             if(error.code === 11000){
-                res.status(409).json({ message: 'User already in use' });
+                res.status(409).json({ message: `Nom d'utilisateur déjà utilisé` });
             }
-            res.status(500).json({ message: 'Internal server error' });
+            res.status(500).json({ message: 'Erreur de serveur interne' });
         }
     } catch (error) {
         console.log(error);

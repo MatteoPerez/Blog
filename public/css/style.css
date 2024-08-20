@@ -17,7 +17,7 @@ body {
     font-family: 'Cairo', sans-serif;
     color: var(--black);
     font-size: var(--font-size-base);
-    background-color: wheat;
+    background-color: rgba(148,19,60,255);
     margin: 0;
 }
 
@@ -69,9 +69,15 @@ img {
 }
 
 .main {
-    margin: 0 15%;
+    margin: 0 5%;
     padding: 1rem 0.5rem;
     background: white;
+}
+
+@media only screen and (min-width: 768px) {
+    .main {
+        margin: 0 10%;
+    }
 }
 
 /* Hero section */
@@ -90,12 +96,12 @@ img {
 .header {
     display: grid;
     align-items: center;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     grid-template-areas:
     "logo button"
     "menu menu";
-    padding: 1rem;
+    padding: 0.25rem 1rem;
     background-color: white;
     border-style: none none solid none;
     border-width: thin;
@@ -113,14 +119,19 @@ img {
 }
 
 .header__logo {
-    font-size: 25px;
+    font-size: 1.5rem;
     font-weight: 800;
     text-decoration: none;
     grid-area: logo;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.header__logo:hover {
-    text-decoration: underline;
+@media only screen and (min-width: 768px) {
+    .header__logo {
+        font-size: xx-large;
+    }
 }
 
 .header__nav {
@@ -278,6 +289,13 @@ img {
     border-style: solid none none none;
     border-width: thin;
     margin-top: auto;
+    font-size: small;
+}
+
+@media only screen and (min-width: 768px) {
+    .footer {
+        font-size: medium;
+    }
 }
 
 /* Search bar */

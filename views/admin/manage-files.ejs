@@ -6,7 +6,13 @@
 <% if (files) { %>
     <ul>
         <% files.forEach(file => { %>
-            <li><a href="/files/download/<%= file.filename %>"><%= file.filename %></a> - <%= file.length %> octets</li>
+            <li>
+                <a href="/files/download/<%= file.filename %>"><%= file.filename %></a> - <%= file.length %> octets
+                <form action="/files/delete/<%= file._id %>?_method=DELETE" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')">Supprimer</button>
+                </form>
+            </li>
         <% }) %>
     </ul>
 <% } else { %>

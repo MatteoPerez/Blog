@@ -33,22 +33,8 @@ router.get('/about', (req, res) => {
 // GET - Access sign in page
 router.get('/admin', async (req, res) => {
     try {
-        const locals = {
-            title: "Se connecter"
-        };
-        res.render('sign_in', {locals, currentRoute: '/sign_in'});
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-// GET - Access manage member page
-router.get('/files', async (req, res) => {
-    try {
-        const locals = {
-            title: "Fichiers"
-        };
-        res.render('files', {locals, currentRoute: '/files'});
+        const locals = {title: "Se connecter"};
+        res.render('sign-in', {locals, currentRoute: '/sign-in'});
     } catch (error) {
         console.log(error);
     }
@@ -59,9 +45,7 @@ router.get('/post/:id', async (req, res) => {
     try {
         let slug = req.params.id;
         const data = await Post.findById({_id: slug});
-        const locals = {
-            title: data.title
-        };
+        const locals = {title: data.title};
         res.render('post', {locals, data, currentRoute: `/post/${slug}`});
     } catch (error) {
         console.log(error);

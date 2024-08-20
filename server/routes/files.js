@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { GridFSBucket } = require('mongodb');
+const { GridFSBucket, ObjectId } = require('mongodb');
 const { getMongoClient } = require('../config/db');
 const authMiddleware = require('../helpers/authMiddleware');
 
@@ -21,17 +21,31 @@ async function getFiles() {
     return await filesCollection.find({}).toArray();
 }
 
+// GET - Access manage files page
 router.get('/manage-files', authMiddleware, async (req, res) => {
     try {
         const files = await getFiles();
         const locals = { title: "Gestion des fichiers" };
-        res.render('admin/manage-files', { locals, files, currentRoute: '/manage-files' });
+        res.render('admin/manage-files', { locals, files, currentRoute: '/dashboard' });
     } catch (error) {
         console.log(error);
         res.status(500).send('Erreur lors de la récupération des fichiers.');
     }
 });
 
+// GET - Access manage member page
+router.get('/files', async (req, res) => {
+    try {
+        const locals = {title: "Fichiers"};
+        const files = await getFiles();
+        res.render('files', {locals, files, currentRoute: '/files'});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Erreur lors de la récupération des fichiers.');
+    }
+});
+
+// POST - Upload a file in the database
 router.post('/upload', upload.single('file'), async (req, res) => {
     const { buffer, originalname } = req.file;
     try {
@@ -45,6 +59,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     }
 });
 
+// GET - Download a file
 router.get('/download/:filename', async (req, res) => {
     const filename = req.params.filename;
     try {
@@ -54,6 +69,19 @@ router.get('/download/:filename', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).send('Erreur lors du téléchargement du fichier.');
+    }
+});
+
+// DELETE - Delete a file from the database
+router.delete('/delete/:id', authMiddleware, async (req, res) => {
+    const fileId = new ObjectId(req.params.id);
+    try {
+        const bucket = getBucket();
+        await bucket.delete(fileId);
+        res.redirect('/files/manage-files');
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Erreur lors de la suppression du fichier.');
     }
 });
 

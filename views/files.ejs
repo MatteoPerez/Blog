@@ -1,1 +1,11 @@
-<h1>Fichiers</h1>
+<h2>Fichiers</h2>
+<h3>Liste des fichiers</h3>
+<% if (files) { %>
+    <ul>
+        <% files.forEach(file => { %>
+            <li><a href="/files/download/<%= file.filename %>"><%= file.filename %></a> - <%= file.length %> octets</li>
+        <% }) %>
+    </ul>
+<% } else { %>
+    <p>Aucun fichier trouvé.</p>
+<% } %>
