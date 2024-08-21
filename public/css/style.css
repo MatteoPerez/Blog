@@ -37,7 +37,7 @@ textarea{
     display: block;
     box-sizing: border-box;
     width: 100%;
-    padding: 0.7rem, 0.75rem;
+    padding: 0.75rem, 0.75rem;
     margin-bottom: 1rem;
 }
 
@@ -69,14 +69,14 @@ img {
 }
 
 .main {
-    margin: 0 5%;
+    margin: 0 10%;
     padding: 1rem 0.5rem;
     background: white;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 768px) {
     .main {
-        margin: 0 10%;
+        margin: 0 5%;
     }
 }
 
@@ -96,11 +96,9 @@ img {
 .header {
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-    "logo button"
-    "menu menu";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+    "logo menu button";
     padding: 0.25rem 1rem;
     background-color: white;
     border-style: none none solid none;
@@ -110,16 +108,44 @@ img {
     z-index: 1;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 768px) {
     .header {
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas: 
+        grid-template-columns: auto;
+        grid-template-areas:
         "logo menu button";
     }
+
+    .dropbtn {
+        border: none;
+        cursor: pointer;
+      }
+      
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+      
+    .dropdown__content {
+        display: none;
+        position: absolute;
+        min-width: 160px;
+        overflow: auto;
+        z-index: 1;
+    }
+      
+    .dropdown__content a {
+        display: block;
+        text-decoration: none;
+        background-color: white;
+        border-style: solid;
+        border-width: thin;
+    }
+      
+    .show {display: block;}
 }
 
 .header__logo {
-    font-size: 1.5rem;
+    font-size: xx-large;
     font-weight: 800;
     text-decoration: none;
     grid-area: logo;
@@ -128,10 +154,8 @@ img {
     gap: 10px;
 }
 
-@media only screen and (min-width: 768px) {
-    .header__logo {
-        font-size: xx-large;
-    }
+@media only screen and (max-width: 768px) {
+    .header__logo {font-size: 1.5rem;}
 }
 
 .header__nav {
@@ -144,6 +168,12 @@ img {
     display: flex;
     justify-content: end;
     grid-area: button;
+}
+
+@media only screen and (max-width: 768px) {
+    .header__button {
+        justify-content: center;
+    }
 }
 
 .header__button button {
@@ -176,6 +206,12 @@ img {
 .header__nav ul a {
     padding: 10px;
     text-decoration: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .header__nav ul a {
+        padding: 0.25rem 0.5rem;
+    }
 }
 
 .header__nav ul a:hover {
@@ -223,9 +259,10 @@ img {
 
 .article-ul li a {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     text-decoration: none;
+    align-items: center;
     margin: 18px 0;
 }
 
@@ -256,16 +293,16 @@ img {
     color: var(--gray);    
     width: 260px;
     display: inline-block;
+    text-align: right;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 768px) {
     .article-ul li a {
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
     }
 
     .article-list__date {
-        text-align: right;
+        text-align: left;
     }
 }
 
@@ -289,12 +326,12 @@ img {
     border-style: solid none none none;
     border-width: thin;
     margin-top: auto;
-    font-size: small;
+    font-size: medium;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 768px) {
     .footer {
-        font-size: medium;
+        font-size: small;
     }
 }
 

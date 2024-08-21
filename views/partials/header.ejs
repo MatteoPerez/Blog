@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header" id="header__desktop" style="display: none;">
     <h1 class="header__logo"><img src="/img/logo.png" style="width: 10%; height: 10%;"> Faculté de médecine - Rouen</h1>
     <nav class="header__nav">
         <ul>
@@ -11,6 +11,31 @@
     <div class="header__button">
         <button class="searchBtn" aria-expanded="false">
             Search
+            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.79167 13.4583C10.9213 13.4583 13.4583 10.9213 13.4583 7.79167C13.4583 4.66205 10.9213 2.125 7.79167 2.125C4.66205 2.125 2.125 4.66205 2.125 7.79167C2.125 10.9213 4.66205 13.4583 7.79167 13.4583Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14.875 14.875L11.7938 11.7938" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>    
+        <% if (isAuthentified) { %>
+            <a href="/logout">Se déconnecter</a>
+        <% } else { %>
+            <a href="/admin" class="<%= isActiveRoute('/sign-in', currentRoute) %>">Se connecter</a>
+        <% } %>
+    </div>
+</header>
+
+<header class="header" id="header__mobile" style="display: none;">
+    <img src="/img/logo.png" style="width: 20%;">
+    <div class="dropdown">
+        <button onclick="showDropdown()" class="dropbtn">&#9776;</button>
+        <div class="dropdown__content" id="dropdownContent">
+            <a href="/" class="<%= isActiveRoute('/', currentRoute) %>">Accueil</a>
+            <a href="/about" class="<%= isActiveRoute('/about', currentRoute) %>">Informations</a>
+            <a href="/dashboard" class="<%= isActiveRoute('/dashboard', currentRoute) %>">Dashboard</a>
+        </div>
+    </div>
+    <div class="header__button">
+        <button class="searchBtn" aria-expanded="false">
             <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.79167 13.4583C10.9213 13.4583 13.4583 10.9213 13.4583 7.79167C13.4583 4.66205 10.9213 2.125 7.79167 2.125C4.66205 2.125 2.125 4.66205 2.125 7.79167C2.125 10.9213 4.66205 13.4583 7.79167 13.4583Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M14.875 14.875L11.7938 11.7938" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
